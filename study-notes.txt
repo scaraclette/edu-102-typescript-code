@@ -1,0 +1,40 @@
+Temporal requires that Workflows are deterministic.
+- Each execution of a given Workflow must produce the same output given the same input.
+
+Code you develop:
+- Worker configuration
+- activity definitions
+- workflow definitions
+
+Activity Errors
+- Activities are intended to encapsulate parts of the Workflow that are prone to failure.
+Example activities: Querying a database
+
+Workflow Errors
+- Are not associated with a Retry Policy by default. It's possible, but typically uncommon.
+In temporal, it's usually preferable to fix the underlying problem that is causing an error 
+than to return the error and fail the Workflow.
+
+Cross language interaction
+You might use a TypeScript client to execute a Workflow written in Go, which calls one
+Activity written in Python and another in Java.
+
+---- Best Practices ----
+- Encapsulate all input parameters into a single object, which is passed as input to the 
+Workflow or Activity, rather than passing a series of individual fields to these functions.
+- Return values from Workflow and Activity Definitions should also be an object.
+- Recommend running at least two Worker Processes for each Task Queue in a production application.
+- Workflow and Activity Executions are asynchronous operations:
+    - client.workflow.execute: execute a workflow execution and wait for the result
+    - client.workflow.start: invoke workflow execution in an asynchronous manner.
+- See Temporal 102: Accessing Results for example of async activities
+
+
+Bin Questions:
+- Are there any benefits in creating multiple queues?
+- When to create multiple queues?
+- How can a workflow run for 10 years? Find where the configuration for this is.
+
+Lib Questions:
+- How are task queues created?
+- Where/how does Temporal store Workflow Executions?
