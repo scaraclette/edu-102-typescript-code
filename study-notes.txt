@@ -1,3 +1,6 @@
+Start new temporal project:
+npx @temporalio/create@latest hello-world --sample hello-world
+
 Temporal requires that Workflows are deterministic.
 - Each execution of a given Workflow must produce the same output given the same input.
 
