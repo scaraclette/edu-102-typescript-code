@@ -41,3 +41,27 @@ Bin Questions:
 Lib Questions:
 - How are task queues created?
 - Where/how does Temporal store Workflow Executions?
+
+## Timers ##
+Delaying workflow execution. Several examples where workflow delays could be done:
+- A workflow used for customer onboarding might send e-mail reminders one day, one week, and/or one month after
+    they sign up.
+- A raw game is created. The workflow to check metadata is triggered/delayed until 10 minutes before game.
+
+Questions:
+- Delaying vs scheduling a workflow.
+
+What happens to a timer if the worker crashes?
+Be sure to note that the cluster fires the timer after the specified duration, regardless of whether or not 
+any Workers happen to be running at that time.
+Example:
+- Your Workflow code uses sleep to set a Timer for 10 seconds.
+    - There is only a single worker
+    - Single worker crashes at 3 seconds in.
+        - If the worker is restarted 2 seconds later, the Workflow execution is paused for 5 seconds (completes 10 seconds) 
+        - If the worker is started 20 minutes later, the Workflow execution is started right away.
+
+## Practice: Durable-execution
+Summary: multiple workers can be ran so that if a worker dies, the other worker can pick up the task.
+- Let's say there is a 10s within a workflow and the worker dies. If the worker is restarted after the 
+sleep time has elapsed, what will happen? -> It will disregard the sleep and execute the activity right away
