@@ -65,3 +65,28 @@ Example:
 Summary: multiple workers can be ran so that if a worker dies, the other worker can pick up the task.
 - Let's say there is a 10s within a workflow and the worker dies. If the worker is restarted after the 
 sleep time has elapsed, what will happen? -> It will disregard the sleep and execute the activity right away
+
+## Workflow Execution States
+Running -> Open
+Closed -> Not running:
+- completed (desireable)
+- continued-as-new: the code is still running, but any future progress will 
+take place in a new workflow execution and event history. docs: https://docs.temporal.io/workflows#continue-as-new
+- failed
+- canceled
+- terminated
+- timed out
+
+## Event History
+A workflow execution may be terminated if the size of any payload (i.e., the input passed into,
+or the result returned by, an Activity or Workflow) exceeds 2MB or if the entire Event History 
+exceeds 50 MB.
+To avoid hitting these limits, it's considered a best practice to avoid passing large amounts of data
+into and out of Workflows and Activities. 
+Use Claim Check pattern -> instead of passing a large amount of data into your function, you 
+store that data external to Temporal, perhaps in a database or file system. You would then pass 
+the identifier for the data, such as the primary key or file path, into the function, and use an Activity
+to retrieve it as needed. 
+
+## Sticky Execution
+Workers cache the state of the workflow functions they execute.
