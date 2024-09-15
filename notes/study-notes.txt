@@ -90,3 +90,24 @@ to retrieve it as needed.
 
 ## Sticky Execution
 Workers cache the state of the workflow functions they execute.
+
+Terminology switch: Temporal Cluster -> Temporal Service
+
+## Temporal Determinism for Workflows
+Temporal's determinism requirement specifies that each time a particular Workflow Definition is executed with 
+a given input, it must yield exactly the same commands in exactly the same order.
+Example: Within a workflow, there is a random number generator. If number is < 10, sleep for 10 hours. Else no sleep.
+the differences between possible input/output/process for this workflow is non-deterministic
+Workflow code should not access or mutate anything external to it.
+
+## Resetting Workflows
+Deploying changes for a workflow might cause non-deterministic errors. If an error occurs, a workflow can
+be reset to a specific event.
+$ temporal workflow reset \
+        --workflow-id pizza-workflow-order-Z1238 \
+        --event-id 4 \
+        --reason "Deployed an incompatible change (deleted Activity)"
+
+## Testing 
+- Integration test -> Activities are directly called
+- Unit/mock -> Activities are mocked directly or through sinon

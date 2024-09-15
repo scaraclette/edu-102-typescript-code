@@ -1,0 +1,9 @@
+# Activity vs Workflows
+Diagram explanation: Activity to read some data. We want to modify the data and return it.
+Questions:
+- Should transformations be done in workflow or activity?
+    - No because every activity result is different data. So potentially, 
+      the transformation itself to the activity result is never the same between workflows.
+- What is best practice to handle expired activity results?
+    - Clarification: If an activity frequently retrieves data that is modified elsewhere,
+    what is best way to handle this?
