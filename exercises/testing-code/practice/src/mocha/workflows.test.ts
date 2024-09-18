@@ -1,4 +1,3 @@
-/*
 import { TestWorkflowEnvironment } from '@temporalio/testing';
 import { before, describe, it } from 'mocha';
 import { Worker } from '@temporalio/worker';
@@ -45,10 +44,11 @@ describe('SayHelloGoodbye workflow', () => {
 
     // TODO: Assert that the HelloMessage field in the
     //       result is: Bonjour, Pierre
+    assert.equal(result.helloMessage, 'Bonjour, Pierre');
 
     // TODO: Assert that the GoodbyeMessage field in the
     //       result is: Au revoir, Pierre
+    assert.equal(result.goodbyeMessage, 'Au revoir, Pierre');
 
   });
 });
-*/

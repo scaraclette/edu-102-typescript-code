@@ -111,3 +111,9 @@ $ temporal workflow reset \
 ## Testing 
 - Integration test -> Activities are directly called
 - Unit/mock -> Activities are mocked directly or through sinon
+
+## Building Application
+Temporal supports "polyglot" development. Your application must have at least one Worker to 
+execute the Workflow and Activity code corresponding to each SDK you use. For example, you could use a 
+Client provided by the TypeScript SDK to start a Workflow that is written in Go and which calls an Activity that's 
+written in Java.
